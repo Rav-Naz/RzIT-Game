@@ -1,0 +1,25 @@
+
+.button
+{
+    padding: 0;
+    border-width: 1;
+    margin: 2;
+    border-color: rgb(200, 200, 200);
+    background-color: white;
+    color: white;
+    font-size: 12;
+    font-weight: 900;
+    border-radius: 5%;
+}
+
+.rad
+{
+    border-radius: 5%;
+}
+
+
+.obecny
+{
+    background-color: #175592;
+    border-color:  #175592;
+}

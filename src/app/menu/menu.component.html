@@ -1,0 +1,21 @@
+<FlexboxLayout class="wh100" flexDirection="column">
+        <Tabs class="tabs" tabsPosition="bottom" >
+
+                <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
+                <TabStrip>
+                    <TabStripItem class="icon strip-item">
+                        <Label text="&#xe060;"></Label>
+                    </TabStripItem>
+                    <TabStripItem class="icon strip-item">
+                        <Label text="&#xe08f;"></Label>
+                    </TabStripItem>
+                </TabStrip>
+
+                <TabContentItem>
+                    <page-router-outlet name="klucze"></page-router-outlet>
+                </TabContentItem>
+                <TabContentItem>
+                    <page-router-outlet name="user"></page-router-outlet>
+                </TabContentItem>
+            </Tabs>
+</FlexboxLayout>

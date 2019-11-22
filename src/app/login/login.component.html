@@ -1,0 +1,15 @@
+<GridLayout class="wh100 center back-color" rows="auto,2*,auto,*" columns="*,200%,auto">
+    <Label class="wieksze" rowSpan="5" colSpan="3"></Label>
+    <Label class="mniejsze" rowSpan="5" colSpan="3"></Label>
+    <Button text="Rejestracja" row="0" col="2" class="rejestracja comfortaa" androidElevation="0" (tap)="rejestracja()"></Button>
+    <StackLayout row="2" col="1" width="100%" colSpan="2">
+        <CardView class="card-view" elevation="30" radius="80">
+            <TextField hint="Numer albumu" class="comfortaa textfield" width="90%" maxLength="6" keyboardType="number"></TextField>
+        </CardView>
+        <CardView class="card-view" elevation="30" radius="80">
+            <TextField hint="Hasło" class="comfortaa textfield" width="90%"></TextField>
+        </CardView>
+    </StackLayout>
+    <Button text="Zaloguj" col="2" row="4" class="zaloguj acme" androidElevation="0" (tap)="zaloguj()"></Button>
+    <Image src="res://logowanie" colSpan="3" row="1" height="30%"></Image>
+</GridLayout>

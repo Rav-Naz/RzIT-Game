@@ -1,0 +1,37 @@
+<ModalStack>
+    <FlexboxLayout class="center">
+        <GridLayout columns="60,*" rows="60,*" class="grid">
+            <FlexboxLayout class="center flex" col="0" row="0" rowSpan="2" colSpan="2">
+                <StackLayout>
+                    <CardView class="card-view center" elevation="15" radius="80">
+                        <TextField hint="Numer albumu" class="comfortaa textfield" width="90%" maxLength="6"
+                            keyboardType="number"></TextField>
+                    </CardView>
+
+                    <CardView class="card-view" elevation="15" radius="80">
+                        <TextField hint="Hasło" class="comfortaa textfield" width="90%"></TextField>
+                    </CardView>
+
+                    <CardView class="card-view" elevation="15" radius="80">
+                        <TextField hint="Powtórz hasło" class="comfortaa textfield" width="90%"></TextField>
+                    </CardView>
+
+                    <GridLayout columns="50,*" rows="50" width="80%" horizontalAlignment="center">
+                        <FlexboxLayout width="30" height="30" alignItems="center" justifyContent="center">
+                            <ns-checkbox-zwykly></ns-checkbox-zwykly>
+                        </FlexboxLayout>
+                        <Label text="Akceptuję regulamin i politykę prywatności" margin="5" class="comfortaa"
+                            textWrap="true" col="1" fontSize="13" color="rgb(60,60,60)" textAlignment="center"></Label>
+                    </GridLayout>
+
+                    <CardView class="card-view zarej" elevation="15" radius="80">
+                        <Button text="Zarejestruj" class="acme zarej-btn" (tap)="zarejestruj()" androidElevation="0"></Button>
+                    </CardView>
+                </StackLayout>
+            </FlexboxLayout>
+            <CardView class="card-view" elevation="15" margin="5" radius="80" width="50" height="50">
+                <Button class="x icon" col="0" row="0" text="&#xe08c;" (tap)="zamknij()"></Button>
+            </CardView>
+        </GridLayout>
+    </FlexboxLayout>
+</ModalStack>
