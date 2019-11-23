@@ -1,1 +1,56 @@
 /* Add mobile styles for the component here.  */
+.flex
+{
+    width: 90%;
+    height: 80%;
+    background-color: #f9f9f9;
+    border-radius: 20%;
+    margin: 10;
+}
+
+.text
+{
+    font-size: 17;
+    text-wrap: true;
+    width: 80%;
+    color: #606060;
+    text-align: center;
+    margin: 5%;
+}
+
+.card-view
+{
+    background: #FFFFFF;
+    /* box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25); */
+    border-radius: 30%;
+    margin: 20;
+    width: 80%;
+    padding: 1;
+}
+
+.zarej
+{
+    margin: 5%;
+    background-color: #1C2755;
+    color: white;
+    border-radius: 30%;
+    font-size: 20;
+}
+
+.zarej-btn
+{
+    background: #1C2755;
+    border-width: 0;
+    border-radius: 2;
+    border-color: #1C2755;
+    color: white;
+    font-size: 20;
+    width: 100%;
+    height: 100%;
+}
+
+.zarej-btn:pressed
+{
+    background: rgb(15, 22, 46);
+}
+

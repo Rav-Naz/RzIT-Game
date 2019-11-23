@@ -1,1 +1,100 @@
 /* Add mobile styles for the component here.  */
+.rejestracja
+{
+    background: #F9F9F9;
+    border-bottom-width: 1;
+    border-radius: 1;
+    border-bottom-color: #8F8F8F;
+    color: #8F8F8F;
+    font-size: 17;
+    padding: 0;
+    height: 30;
+    margin: 15;
+    text-transform: capitalize;
+
+}
+
+.flex
+{
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.rejestracja:pressed
+{
+    color: #606060;
+    border-bottom-color: #606060;
+}
+
+.naglowek
+{
+    text-wrap:true;
+}
+
+.opis
+{
+    text-wrap: true;
+    width: 100%;
+    color: #606060;
+}
+
+.dane
+{
+    text-wrap: true;
+    width: 100%;
+    color: #1C2755;
+    padding: 0;
+}
+
+.r
+{
+    text-align: right;
+}
+
+.btn
+{
+    background-color: #f9f9f9;
+    border-width: 0;
+    border-color: #F9F9F9;
+    border-radius: 5%;
+    color: #1C2755;
+    margin: 2;
+}
+
+.btn:pressed
+{
+    background-color: #f9f9f9;
+    color: rgb(15, 22, 46);
+}
+
+.polkole
+{
+    width: 100%;
+    clip-path: ellipse(50% 80% at 50% 100%);
+    background-color: #175592;
+}
+
+.zagadka
+{
+    width: 100%;
+    text-align: center;
+    color: #1C2755;
+    font-size: 25;
+    text-wrap:true;
+}
+
+.tresc
+{
+    text-wrap: true;
+    font-size: "17";
+    width: 90%;
+    color: white;
+    text-align: center;
+    margin: 10;
+}
+
+.border
+{
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 96%, #f9f9f9 100%);
+    width: 100%;
+}

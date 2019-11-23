@@ -1,1 +1,11 @@
-<Button text="skanowanie works!" class="btn btn-primary"></Button>
+<ModalStack>
+    <FlexboxLayout class="center flex">
+        <StackLayout>
+            <Label text="Zbliż telefon do etykiety aby zebrać klucz" class="comfortaa text"></Label>
+            <Image src="res://skan" width="85%" margin="10"></Image>
+            <CardView class="card-view zarej" elevation="15" radius="80">
+                <Button text="Anuluj" class="acme zarej-btn" (tap)="zamknij()" androidElevation="0"></Button>
+            </CardView>
+        </StackLayout>
+    </FlexboxLayout>
+</ModalStack>

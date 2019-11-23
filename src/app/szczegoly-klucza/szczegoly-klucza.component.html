@@ -1,1 +1,36 @@
-<Button text="szczegoly-klucza works!" class="btn btn-primary"></Button>
+<FlexboxLayout class="wh100 back-color">
+    <GridLayout columns="*,auto,*" rows="50,auto,*" >
+
+        <FlexboxLayout class="center" col="1">
+            <Label [text]="klucz.tytul" class="comfortaa naglowek"></Label>
+        </FlexboxLayout>
+
+        <FlexboxLayout class="center" col="2">
+            <Button text="Powrót" class="rejestracja comfortaa" androidElevation="0" (tap)="powrot()"></Button>
+        </FlexboxLayout>
+
+        <GridLayout col="0" colSpan="3" row="1" rows="auto,50" columns="*,*" width="90%" marginTop="25">
+            <Label col="0" row="0" text="Data&#xA;zebrania:" class="opis comfortaa"></Label>
+            <FlexboxLayout col="0" row="1" class="wh100 center">
+                <Label [text]="klucz.data_zebrania" class="dane acme"></Label>
+            </FlexboxLayout>
+            <Label col="1" row="0" text="Miejsce&#xA;zebrania:" class="opis comfortaa r"></Label>
+            <FlexboxLayout col="1" row="1" class="wh100 flex center">
+                <Button text="&#xe067;" class="dane icon btn" fontSize="30" width="40%" androidElevation="0"></Button>
+            </FlexboxLayout>
+        </GridLayout>
+
+
+        <ScrollView col="0" colSpan="3" row="2" height="100%" backgroundColor="#175592">
+            <StackLayout>
+                <GridLayout rows="70,*">
+                    <Label class="wh100" backgroundColor="#f9f9f9"></Label>
+                    <Label class="polkole"></Label>
+                    <Label text="&#xA;Zagadka" class="zagadka acme"></Label>
+                    <Label row="1" [text]="klucz.zagadka" class="comfortaa tresc"></Label>
+                </GridLayout>
+            </StackLayout>
+        </ScrollView>
+        <Label class="border" col="0" colSpan="3" row="2" height="100%"></Label>
+    </GridLayout>
+</FlexboxLayout>

@@ -1,1 +1,20 @@
-<Button text="klucze works!" class="btn btn-primary"></Button>
+<FlexboxLayout class="wh100 back-color">
+    <GridLayout rows="auto,*,*,*" columns="*,200">
+        <StackLayout width="100%" row="0" colSpan="2" margin="5">
+            <Label [text]="'Zebrano: ' + listaKluczy.length + ' z 7' " horizontalAlignment="center" fontSize="15" class="acme"></Label>
+            <FlexboxLayout class="postep-cont" width="80%" #postepcont>
+                <Label class="postep" width="0%" #postep></Label>
+            </FlexboxLayout>
+        </StackLayout>
+        <ScrollView row="1" rowSpan="3" colSpan="2" class="wh100" marginTop="5">
+                <StackLayout>
+                    <Button class="element" androidElevation="3" *ngFor="let element of listaKluczy" (tap)="szczegoly(element)">
+                        <FormattedString>
+                            <Span [text]="'  ' + element.id + '. ' + element.tytul" class="span comfortaa"></Span>
+                        </FormattedString>
+                    </Button>
+                </StackLayout>
+        </ScrollView>
+        <Button class="kolo icon" col="1" row="2" text="&#xe095;      " (tap)="skanuj()"></Button>
+    </GridLayout>
+</FlexboxLayout>

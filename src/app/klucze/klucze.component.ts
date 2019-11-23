@@ -1,5 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
 import { Page } from 'tns-core-modules/ui/page/page';
+import { DaneService } from '../dane.service';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { Klucz } from '../modele/klucz.model';
+import { FlexboxLayout } from 'tns-core-modules/ui/layouts/flexbox-layout/flexbox-layout';
+import { Label } from 'tns-core-modules/ui/label/label';
+import { ModalDialogService } from 'nativescript-angular/modal-dialog';
+import { ExtendedShowModalOptions } from 'nativescript-windowed-modal';
+import { SkanowanieComponent } from '../modale/skanowanie/skanowanie.component';
+import { RouterExtensions } from 'nativescript-angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ns-klucze',
@@ -9,10 +19,54 @@ import { Page } from 'tns-core-modules/ui/page/page';
 })
 export class KluczeComponent implements OnInit {
 
-  constructor(private page: Page) { }
+    klucze: Subscription
+    listaKluczy: Array<Klucz> = [];
+
+
+    @ViewChild("postepcont", { static: false }) postepContRef: ElementRef<FlexboxLayout>;
+    @ViewChild("postep", { static: false }) postepRef: ElementRef<Label>;
+
+  constructor(private page: Page, private dane: DaneService, private modal: ModalDialogService, private vcRef: ViewContainerRef,
+    private router: RouterExtensions, private active: ActivatedRoute) { }
 
   ngOnInit() {
       this.page.actionBarHidden = true;
-  }
+      this.klucze = this.dane.Klucze.subscribe(klucze => {
+          this.listaKluczy = klucze
+          if(this.listaKluczy !== null)
+          {
+              setTimeout(() => {
+                  this.obliczPostep()
+              }, 200)
+          }
+      })
+      this.dane.pobierzKlucze()
+    }
+
+    obliczPostep()
+    {
+        this.postepRef.nativeElement.width = {unit: "%", value: (1/7)*this.listaKluczy.length}
+    }
+
+    skanuj()
+    {
+        this.modal.showModal(SkanowanieComponent, {
+            context: null,
+            viewContainerRef: this.vcRef,
+            fullscreen: false,
+            stretched: false,
+            animated: true,
+            closeCallback: null,
+            dimAmount: 0.7 // Sets the alpha of the background dim,
+
+        } as ExtendedShowModalOptions)
+
+    }
+
+    szczegoly(klucz: Klucz)
+    {
+        this.dane.nadajKlucz(klucz)
+        this.router.navigate(['../szczegoly-klucza'], {transition: {name: 'slideRight'}, relativeTo: this.active})
+    }
 
 }

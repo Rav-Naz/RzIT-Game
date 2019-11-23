@@ -1,1 +1,18 @@
 /* Add mobile styles for the component here.  */
+.tabs
+{
+    font-size: 20;
+    color: #1C2755;
+}
+
+.strip-item
+{
+    height: 60;
+    background-color: #175592;
+}
+
+.strip-item:active
+{
+    background-color: #1C2755;
+    color: white;
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 
 @Component({
   selector: 'ns-skanowanie',
@@ -8,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SkanowanieComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modal: ModalDialogParams) { }
 
   ngOnInit() {
   }
+
+  zamknij()
+  {
+      this.modal.closeCallback()
+  }
+
 
 }

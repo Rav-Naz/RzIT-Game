@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   zaloguj()
   {
-    this.router.navigate(['/menu'], {transition: {name: 'slideLeft'}, clearHistory: true})
+    this.router.navigate(['/menu'], {transition: {name: 'slideTop'}, clearHistory: true})
   }
 
   rejestracja()
