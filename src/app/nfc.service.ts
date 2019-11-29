@@ -22,12 +22,13 @@ export class NfcService {
                 this.nfc.setOnNdefDiscoveredListener((data: NfcNdefData) => {
                     let dane = JSON.parse(JSON.stringify(data))
                     scan = dane.message[0].payloadAsString.toString()
-                    this.nfc.setOnNdefDiscoveredListener(null)
-                    return resolve(scan)
+                    this.wylaczNasluch()
+                    resolve(scan)
                 })
             }
-            else {
-                console.log("Włącz moduł NFC")
+            else
+            {
+                resolve('nfc')
             }
         })
     })

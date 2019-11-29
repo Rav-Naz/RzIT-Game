@@ -5,7 +5,7 @@
     width: 100%;
     height: 100%;
     clip-path: circle(170% at 50% 50%);
-    margin-top: 80%;
+    margin-top: 55%;
 }
 
 .mniejsze
@@ -34,6 +34,21 @@
 
 }
 
+.aktywuj
+{
+    background: #F9F9F9;
+    border-bottom-width: 1;
+    border-radius: 1;
+    border-bottom-color: #8F8F8F;
+    color: #8F8F8F;
+    font-size: 17;
+    padding: 0;
+    height: 30;
+    width: 60%;
+    margin: 15;
+    text-transform: none;
+}
+
 .rejestracja:pressed
 {
     color: #606060;
@@ -58,6 +73,13 @@
     font-size: 20;
 }
 
+.zaloguj:disabled
+{
+    background-color: rgb(206, 206, 206);
+    color: rgb(124, 124, 124);
+    border-color:  rgb(206, 206, 206);
+}
+
 .zaloguj:pressed
 {
     background-color: rgb(15, 22, 46);
@@ -71,3 +93,11 @@
     border-width: 1;
 }
 
+.text
+{
+    text-wrap: true;
+    text-align: center;
+    margin: 20;
+    font-size: 17;
+    color: white;
+}

@@ -66,6 +66,13 @@
     height: 100%;
 }
 
+.zarej-btn:disabled
+{
+    background-color: rgb(206, 206, 206);
+    color: rgb(124, 124, 124);
+    border-color:  rgb(206, 206, 206);
+}
+
 .zarej-btn:pressed
 {
     background: rgb(15, 22, 46);

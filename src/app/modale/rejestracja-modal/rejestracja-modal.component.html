@@ -2,30 +2,32 @@
     <FlexboxLayout class="center">
         <GridLayout columns="60,*" rows="60,*" class="grid">
             <FlexboxLayout class="center flex" col="0" row="0" rowSpan="2" colSpan="2">
-                <StackLayout>
+                <StackLayout [formGroup]="formP">
                     <CardView class="card-view center" elevation="15" radius="80">
                         <TextField hint="Numer albumu" class="comfortaa textfield" width="90%" maxLength="6"
-                            keyboardType="number"></TextField>
+                            keyboardType="number" formControlName="numer"></TextField>
                     </CardView>
 
                     <CardView class="card-view" elevation="15" radius="80">
-                        <TextField hint="Hasło" class="comfortaa textfield" width="90%"></TextField>
+                        <TextField hint="Hasło" class="comfortaa textfield" width="90%" secure="true" formControlName="haslo"></TextField>
                     </CardView>
 
+                    <Label text="Hasła się różnią" width="100%" textAlignment="center" color="rgb(255,30,20)" *ngIf="rozne"></Label>
+
                     <CardView class="card-view" elevation="15" radius="80">
-                        <TextField hint="Powtórz hasło" class="comfortaa textfield" width="90%"></TextField>
+                        <TextField hint="Powtórz hasło" class="comfortaa textfield" width="90%" secure="true" formControlName="powtorz"></TextField>
                     </CardView>
 
                     <GridLayout columns="50,*" rows="50" width="80%" horizontalAlignment="center">
                         <FlexboxLayout width="30" height="30" alignItems="center" justifyContent="center">
-                            <ns-checkbox-zwykly></ns-checkbox-zwykly>
+                            <ns-checkbox-zwykly (checkStatus)="zmienCheck($event)" [stan]="odhaczone"></ns-checkbox-zwykly>
                         </FlexboxLayout>
                         <Label text="Akceptuję regulamin i politykę prywatności" margin="5" class="comfortaa"
                             textWrap="true" col="1" fontSize="13" color="rgb(60,60,60)" textAlignment="center"></Label>
                     </GridLayout>
 
                     <CardView class="card-view zarej" elevation="15" radius="80">
-                        <Button text="Zarejestruj" class="acme zarej-btn" (tap)="zarejestruj()" androidElevation="0"></Button>
+                        <Button text="Zarejestruj" class="acme zarej-btn" (tap)="zarejestruj()" androidElevation="0" [isEnabled]="this.formP.valid && odhaczone"></Button>
                     </CardView>
                 </StackLayout>
             </FlexboxLayout>

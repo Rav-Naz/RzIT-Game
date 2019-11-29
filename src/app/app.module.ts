@@ -1,5 +1,7 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { ReactiveFormsModule } from "@angular/forms";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -11,6 +13,7 @@ import { KluczeComponent } from './klucze/klucze.component';
 import { UserDaneComponent } from './user-dane/user-dane.component';
 import { SzczegolyKluczaComponent } from './szczegoly-klucza/szczegoly-klucza.component';
 import { SkanowanieComponent } from './modale/skanowanie/skanowanie.component';
+import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -24,7 +27,10 @@ import { SkanowanieComponent } from './modale/skanowanie/skanowanie.component';
     ],
     imports: [
         NativeScriptModule,
-        AppRoutingModule
+        NativeScriptFormsModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        NativeScriptHttpClientModule
     ],
     declarations: [
         AppComponent,

@@ -10,6 +10,7 @@ import { ExtendedShowModalOptions } from 'nativescript-windowed-modal';
 import { SkanowanieComponent } from '../modale/skanowanie/skanowanie.component';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { UiService } from '../ui.service';
 
 @Component({
   selector: 'ns-klucze',
@@ -27,7 +28,7 @@ export class KluczeComponent implements OnInit {
     @ViewChild("postep", { static: false }) postepRef: ElementRef<Label>;
 
   constructor(private page: Page, private dane: DaneService, private modal: ModalDialogService, private vcRef: ViewContainerRef,
-    private router: RouterExtensions, private active: ActivatedRoute) { }
+    private router: RouterExtensions, private active: ActivatedRoute, private ui: UiService) { }
 
   ngOnInit() {
       this.page.actionBarHidden = true;
@@ -59,14 +60,23 @@ export class KluczeComponent implements OnInit {
             closeCallback: null,
             dimAmount: 0.7 // Sets the alpha of the background dim,
 
-        } as ExtendedShowModalOptions)
+        } as ExtendedShowModalOptions).then(result => {
+            if(result === 'nfc')
+            {
+                this.ui.pokazPowiadomienie('Uwaga!', 'Włącz moduł NFC', 2,2)
+            }
+            else
+            {
+                this.ui.pokazPowiadomienie('Sukces!', result, 0,2)
+            }
+        })
 
     }
 
     szczegoly(klucz: Klucz)
     {
         this.dane.nadajKlucz(klucz)
-        this.router.navigate(['../szczegoly-klucza'], {transition: {name: 'slideRight'}, relativeTo: this.active})
+        this.router.navigate(['../szczegoly-klucza'], {transition: {name: 'slideRight', duration: 500}, relativeTo: this.active})
     }
 
 }

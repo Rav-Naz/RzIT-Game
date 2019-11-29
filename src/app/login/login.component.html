@@ -1,15 +1,25 @@
-<GridLayout class="wh100 center back-color" rows="auto,2*,auto,*" columns="*,200%,150">
-    <Label class="wieksze" rowSpan="5" colSpan="3"></Label>
-    <!-- <Label class="mniejsze" rowSpan="5" colSpan="3"></Label> -->
-    <Button text="Rejestracja" row="0" col="2" class="rejestracja comfortaa" androidElevation="0" (tap)="rejestracja()"></Button>
-    <StackLayout row="2" col="1" width="100%" colSpan="2">
-        <CardView class="card-view" elevation="30" radius="80">
-            <TextField hint="Numer albumu" class="comfortaa textfield" width="90%" maxLength="6" keyboardType="number"></TextField>
-        </CardView>
-        <CardView class="card-view" elevation="30" radius="80">
-            <TextField hint="Hasło" class="comfortaa textfield" width="90%"></TextField>
-        </CardView>
-    </StackLayout>
-    <Button col="2" row="4" text="Zaloguj" class="zaloguj acme" androidElevation="0" (tap)="zaloguj()"></Button>
-    <Image src="res://logowanie" colSpan="3" row="1" height="30%"></Image>
+<GridLayout *ngIf="!avail" class="wh100 back-color">
+    <Label class="wieksze" marginTop="40%" rowSpan="5" colSpan="3"></Label>
+    <Label class="mniejsze" rowSpan="5" colSpan="3"></Label>
+    <FlexboxLayout class="w100 center"  flexDirection="column">
+        <Label text="&#xe05a;" class="icon" color="white" fontSize="100"></Label>
+        <Label text="Przykro nam, ale aby korzystać z naszej aplikacji potrzebujesz w swoim urządzeniu wbudowanego modułu NFC" class="comfortaa text"></Label>
+    </FlexboxLayout>
 </GridLayout>
+    <GridLayout class="wh100 center back-color" rows="auto,2*,auto,*" columns="*,200%,150" *ngIf="avail" [formGroup]="formP">
+        <Label class="wieksze" rowSpan="5" colSpan="3"></Label>
+        <Button text="Rejestracja" row="0" col="2" class="rejestracja comfortaa" androidElevation="0" (tap)="rejestracja()"></Button>
+        <FlexboxLayout row="0" col="0" colSpan="2" width="100%">
+            <Button text="Aktywuj konto" class="aktywuj comfortaa" androidElevation="0" (tap)="rejestracja()"></Button>
+        </FlexboxLayout>
+        <StackLayout row="2" col="1" width="100%" colSpan="2">
+            <CardView class="card-view" elevation="30" radius="80">
+                    <TextField hint="Numer albumu" class="comfortaa textfield" width="90%" maxLength="6" keyboardType="number" formControlName="numer"></TextField>
+            </CardView>
+            <CardView class="card-view" elevation="30" radius="80">
+                    <TextField hint="Hasło" class="comfortaa textfield" width="90%" secure="true" formControlName="haslo"></TextField>
+            </CardView>
+        </StackLayout>
+        <Button col="2" row="4" text="Zaloguj" class="zaloguj acme" androidElevation="0" (tap)="zaloguj()" [isEnabled]="this.formP.valid" ></Button>
+        <Image src="res://logowanie" colSpan="3" row="1" height="30%"></Image>
+    </GridLayout>

@@ -3,6 +3,7 @@ import { DaneService } from '../dane.service';
 import { Klucz } from '../modele/klucz.model';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { RouterExtensions } from 'nativescript-angular/router';
+import * as utils from "tns-core-modules/utils/utils";
 
 @Component({
   selector: 'ns-szczegoly-klucza',
@@ -24,6 +25,11 @@ export class SzczegolyKluczaComponent implements OnInit {
   powrot()
   {
     this.router.backToPreviousPage()
+  }
+
+  otworzMape()
+  {
+    utils.openUrl(this.klucz.link)
   }
 
 }

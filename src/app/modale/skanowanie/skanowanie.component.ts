@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
+import { NfcService } from '~/app/nfc.service';
 
 @Component({
   selector: 'ns-skanowanie',
@@ -9,14 +10,21 @@ import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 })
 export class SkanowanieComponent implements OnInit {
 
-  constructor(private modal: ModalDialogParams) { }
+  private result: string = undefined;
+
+  constructor(private modal: ModalDialogParams, private nfc: NfcService) { }
 
   ngOnInit() {
+      this.nfc.nasluchuj().then(res => {
+          this.result = res;
+          this.zamknij()
+      })
   }
 
   zamknij()
   {
-      this.modal.closeCallback()
+      this.nfc.wylaczNasluch()
+      this.modal.closeCallback(this.result)
   }
 
 

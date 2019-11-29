@@ -55,3 +55,15 @@
 {
     background: rgb(15, 22, 46);
 }
+
+.make
+{
+    background: #175592;
+    border-width: 1;
+    border-radius: 2;
+    border-color: #175592;
+    color: white;
+    font-size: 20;
+    padding: 0;
+    font-size: 15;
+}
