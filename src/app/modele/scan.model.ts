@@ -1,4 +1,4 @@
-import { Message } from "~/message.model";
+import { Message } from "~/app/modele/message.model";
 
 export interface Scan {
     type: string,

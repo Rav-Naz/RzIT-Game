@@ -8,6 +8,8 @@
                             keyboardType="number" formControlName="numer"></TextField>
                     </CardView>
 
+                    <Label text="Użytkownik o tym numerze albumu już jest zarejestrowany" textWrap="true" width="80%" textAlignment="center" color="rgb(255,30,20)" *ngIf="istnieje"></Label>
+
                     <CardView class="card-view" elevation="15" radius="80">
                         <TextField hint="Hasło" class="comfortaa textfield" width="90%" secure="true" formControlName="haslo"></TextField>
                     </CardView>

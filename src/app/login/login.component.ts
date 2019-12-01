@@ -6,6 +6,10 @@ import { ModalDialogService } from 'nativescript-angular/modal-dialog';
 import { ExtendedShowModalOptions } from 'nativescript-windowed-modal';
 import { RejestracjaModalComponent } from '../modale/rejestracja-modal/rejestracja-modal.component';
 import { Nfc } from 'nativescript-nfc';
+import { HttpService } from '../http.service';
+import { UiService } from '../ui.service';
+import { AktywacjaModalComponent } from '../modale/aktywacja-modal/aktywacja-modal.component';
+import { ZapomnialemModalComponent } from '../modale/zapomnialem-modal/zapomnialem-modal.component';
 
 @Component({
   selector: 'ns-login',
@@ -15,7 +19,8 @@ import { Nfc } from 'nativescript-nfc';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: RouterExtensions, private page: Page, private modal: ModalDialogService, private vcRef: ViewContainerRef) { }
+  constructor(private router: RouterExtensions, private page: Page, private modal: ModalDialogService,
+    private vcRef: ViewContainerRef, private http: HttpService, private ui: UiService) { }
 
   avail: boolean = false;
   nfc: Nfc;
@@ -33,8 +38,8 @@ export class LoginComponent implements OnInit {
     });
 
     this.formP = new FormGroup({
-        numer: new FormControl(null, { updateOn:'change', validators: [Validators.pattern('^[0-9]{6}$')] }),
-        haslo: new FormControl(null, { updateOn:'change', validators: [Validators.required] })
+        numer: new FormControl(null, { updateOn:'change', validators: [Validators.required,Validators.pattern('^[0-9]{6}$')] }),
+        haslo: new FormControl(null, { updateOn:'change', validators: [Validators.required,Validators.minLength(3)] })
     });
 
     this.formP.get('numer').statusChanges.subscribe(status => {
@@ -47,12 +52,70 @@ export class LoginComponent implements OnInit {
 
   zaloguj()
   {
-    this.router.navigate(['/menu'], {transition: {name: 'slideTop', duration: 500}, clearHistory: true})
+    this.http.logowanie(this.formP.get('numer').value,this.formP.get('haslo').value).then(res => {
+        switch (res) {
+            case 'poprawne':
+                    this.http.nadajAlbum(this.formP.get('numer').value)
+                    this.router.navigate(['/menu'], {transition: {name: 'slideTop', duration: 500}, clearHistory: true})
+                    break;
+            case 'niepoprawne':
+                this.ui.pokazPowiadomienie("Uwaga!", "Niepoprawny numer albumu i/lub hasło", 1,2)
+                break;
+            case 'nieaktywne':
+                    this.modal.showModal(AktywacjaModalComponent, {
+                        context: this.formP.get('numer').value,
+                        viewContainerRef: this.vcRef,
+                        fullscreen: false,
+                        stretched: false,
+                        animated: true,
+                        closeCallback: null,
+                        dimAmount: 0.7 // Sets the alpha of the background dim,
+
+                    } as ExtendedShowModalOptions).then(callback => {
+                        if(callback === "dalej")
+                        {
+                            this.http.nadajAlbum(this.formP.get('numer').value)
+                            setTimeout(() => {
+                                this.router.navigate(['/menu'], {transition: {name: 'slideTop', duration: 500}, clearHistory: true})
+                            }, 200)
+                        }
+                        else if(callback === "blad")
+                        {
+                            this.ui.pokazPowiadomienie("Błąd!", "Wystąpił nieoczekiwany błąd", 1,2)
+                        }
+                    })
+                break;
+            case 'blad':
+                this.ui.pokazPowiadomienie("Błąd!", "Wystąpił nieoczekiwany błąd", 1,2)
+                break;
+            default:
+                break;
+        }
+    })
+  }
+
+  szyfr()
+  {
+      console.log(encodeURI('https://www.google.pl/maps/dir//Rzeszów,+35-001,+Polska/@50.0191842,21.9835212,18.5z/data=!4m8!4m7!1m0!1m5!1m1!1s0x473cfbb3f429cf1d:0xe25a6613e21fab44!2m2!1d21.9844414!2d50.0192997'))
   }
 
   rejestracja()
   {
     this.modal.showModal(RejestracjaModalComponent, {
+        context: null,
+        viewContainerRef: this.vcRef,
+        fullscreen: false,
+        stretched: false,
+        animated: true,
+        closeCallback: null,
+        dimAmount: 0.7 // Sets the alpha of the background dim,
+
+    } as ExtendedShowModalOptions).then()
+  }
+
+  zapomnialem()
+  {
+    this.modal.showModal(ZapomnialemModalComponent, {
         context: null,
         viewContainerRef: this.vcRef,
         fullscreen: false,

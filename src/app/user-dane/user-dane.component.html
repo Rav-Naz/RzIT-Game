@@ -2,11 +2,11 @@
     <FlexboxLayout class="wh100 flex center">
         <StackLayout>
             <Label text="Numer albumu" horizontalAlignment="center" class="comfortaa naglowek"></Label>
-            <Label text="166505" horizontalAlignment="center" class="acme dane"></Label>
+            <Label [text]="nr_albumu" horizontalAlignment="center" class="acme dane"></Label>
             <Label text="Zebrane klucze" horizontalAlignment="center" class="comfortaa naglowek"></Label>
             <Label [text]="dlugosc_listy" horizontalAlignment="center" class="acme dane"></Label>
             <Label text="Ranking" horizontalAlignment="center" class="comfortaa naglowek"></Label>
-            <Label text="1" horizontalAlignment="center" class="acme dane"></Label>
+            <Label [text]="miejsce" horizontalAlignment="center" class="acme dane"></Label>
             <CardView class="card-view zarej" elevation="15" radius="80">
                 <Button text="Wyloguj" class="acme zarej-btn" (tap)="wyloguj()" androidElevation="0"></Button>
             </CardView>

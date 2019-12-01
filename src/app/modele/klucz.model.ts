@@ -1,6 +1,6 @@
 export interface Klucz {
     id: number,
-    rfid: number,
+    rfid: string,
     tytul: string,
     zagadka: string,
     link: string,

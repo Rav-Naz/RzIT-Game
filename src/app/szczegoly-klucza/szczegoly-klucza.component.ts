@@ -15,11 +15,15 @@ export class SzczegolyKluczaComponent implements OnInit {
 
   constructor(private page: Page ,private dane: DaneService, private router: RouterExtensions) { }
 
-  klucz: Klucz =  {id: 1, rfid: 100000, tytul: '', zagadka: '', link: 'https://www.google.pl/maps/@50.0217305,21.9915194,15.46z', data_zebrania: '06.12.2019 16:14'};
+  klucz: Klucz =  {id: 1, rfid: '100000', tytul: '', zagadka: '', link: 'https://www.google.pl/maps/@50.0217305,21.9915194,15.46z', data_zebrania: '06.12.2019 16:14'};
+  data: Date;
 
   ngOnInit() {
     this.page.actionBarHidden = true
     this.klucz = this.dane.WybranyKlucz;
+    this.data = new Date(this.klucz.data_zebrania)
+    this.data.setHours(this.data.getHours() + 2)
+
   }
 
   powrot()

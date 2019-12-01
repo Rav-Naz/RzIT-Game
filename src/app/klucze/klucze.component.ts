@@ -3,7 +3,6 @@ import { Page } from 'tns-core-modules/ui/page/page';
 import { DaneService } from '../dane.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Klucz } from '../modele/klucz.model';
-import { FlexboxLayout } from 'tns-core-modules/ui/layouts/flexbox-layout/flexbox-layout';
 import { Label } from 'tns-core-modules/ui/label/label';
 import { ModalDialogService } from 'nativescript-angular/modal-dialog';
 import { ExtendedShowModalOptions } from 'nativescript-windowed-modal';
@@ -11,6 +10,7 @@ import { SkanowanieComponent } from '../modale/skanowanie/skanowanie.component';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { UiService } from '../ui.service';
+import * as permissions from '../../../node_modules/nativescript-permissions'
 
 @Component({
   selector: 'ns-klucze',
@@ -22,9 +22,9 @@ export class KluczeComponent implements OnInit {
 
     klucze: Subscription
     listaKluczy: Array<Klucz> = [];
+    dlugoscCalejListy: number = 0;
 
 
-    @ViewChild("postepcont", { static: false }) postepContRef: ElementRef<FlexboxLayout>;
     @ViewChild("postep", { static: false }) postepRef: ElementRef<Label>;
 
   constructor(private page: Page, private dane: DaneService, private modal: ModalDialogService, private vcRef: ViewContainerRef,
@@ -33,12 +33,16 @@ export class KluczeComponent implements OnInit {
   ngOnInit() {
       this.page.actionBarHidden = true;
       this.klucze = this.dane.Klucze.subscribe(klucze => {
-          this.listaKluczy = klucze
-          if(this.listaKluczy !== null)
+
+          if(klucze !== null)
           {
-              setTimeout(() => {
-                  this.obliczPostep()
-              }, 200)
+            this.listaKluczy = klucze
+            this.dane.dlugoscListyKluczy().then(res => {
+                this.dlugoscCalejListy = res
+                setTimeout(() => {
+                    this.obliczPostep()
+                }, 200)
+            })
           }
       })
       this.dane.pobierzKlucze()
@@ -46,11 +50,17 @@ export class KluczeComponent implements OnInit {
 
     obliczPostep()
     {
-        this.postepRef.nativeElement.width = {unit: "%", value: (1/7)*this.listaKluczy.length}
+        this.postepRef.nativeElement.width = {unit: "%", value: ( 1 / this.dane.DlugoscCalejListy ) * this.listaKluczy.length}
     }
 
     skanuj()
     {
+        if(!permissions.hasPermission(android.Manifest.permission.NFC))
+        {
+            permissions.requestPermission(android.Manifest.permission.NFC,"Moduł NFC jest niezbędny do zabawy!").then(res => {
+            return
+            })
+        }
         this.modal.showModal(SkanowanieComponent, {
             context: null,
             viewContainerRef: this.vcRef,
@@ -65,9 +75,26 @@ export class KluczeComponent implements OnInit {
             {
                 this.ui.pokazPowiadomienie('Uwaga!', 'Włącz moduł NFC', 2,2)
             }
-            else
+            else if(result !== undefined)
             {
-                this.ui.pokazPowiadomienie('Sukces!', result, 0,2)
+                this.dane.zbierzKlucz(result).then(res => {
+                    if(res === 1)
+                    {
+                        this.ui.pokazPowiadomienie('Sukces!', 'Znalazłeś nowy klucz', 0,2)
+                    }
+                    else if(res === 2)
+                    {
+                        this.ui.pokazPowiadomienie('Uwaga!', 'Już posiadasz ten klucz', 2,2)
+                    }
+                    else if(res === 3)
+                    {
+                        this.ui.pokazPowiadomienie('Uwaga!', 'Tego klucza nie ma w naszej bazie', 2,2)
+                    }
+                    else
+                    {
+                        this.ui.pokazPowiadomienie("Błąd!", "Wystąpił nieoczekiwany błąd", 1, 2)
+                    }
+                })
             }
         })
 

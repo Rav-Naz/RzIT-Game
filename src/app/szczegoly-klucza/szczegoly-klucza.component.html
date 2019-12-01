@@ -12,7 +12,7 @@
         <GridLayout col="0" colSpan="3" row="1" rows="auto,50" columns="*,*" width="90%" marginTop="25">
             <Label col="0" row="0" text="Data&#xA;zebrania:" class="opis comfortaa"></Label>
             <FlexboxLayout col="0" row="1" class="wh100 center">
-                <Label [text]="klucz.data_zebrania" class="dane acme"></Label>
+                <Label [text]="data | godzina" class="dane acme"></Label>
             </FlexboxLayout>
             <Label col="1" row="0" text="Miejsce&#xA;zebrania:" class="opis comfortaa r"></Label>
             <FlexboxLayout col="1" row="1" class="wh100 flex center">

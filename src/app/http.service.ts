@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import * as sha512 from 'js-sha512';
+import { Klucz } from './modele/klucz.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,12 @@ export class HttpService {
       this.nr_albumu = nr_albumu;
   }
 
+  get NumerAlbumu()
+  {
+      return this.nr_albumu
+  }
+
+  //TWORZENIE NOWEGO USERA
   async rejestracja(numer_albumu: number, haslo: string)
   {
     return new Promise<number>(resolve => {
@@ -49,4 +56,190 @@ export class HttpService {
         });
     })
   }
+
+  //LOGOWANIE
+  async logowanie(nr_albumu_user: string, haslo: string) {
+    return new Promise<string>(resolve => {
+        let options = new HttpHeaders({
+            "Content-Type": "application/json",
+            "data": encodeURI(JSON.stringify({ nr_albumu_user: nr_albumu_user, haslo: sha512.sha512.hmac('IT', haslo) }))
+        });
+
+        this.http.get(this.serverUrl + '/login', { headers: options }).subscribe(res => {
+            if(res === 'nieaktywne')
+            {
+                resolve('nieaktywne')
+            }
+            else if(res === 'poprawne')
+            {
+                resolve('poprawne')
+            }
+            else if(res === 'brak')
+            {
+                resolve('brak')
+            }
+            else if(res === 'niepoprawne')
+            {
+                resolve('niepoprawne')
+            }
+            else
+            {
+                resolve('blad')
+            }
+        });
+    });
 }
+
+//AKTYWACJA USERA
+async aktywacja(nr_albumu_user: string, kod_aktywacji: string) {
+    return new Promise<string>(resolve => {
+        let options = new HttpHeaders({
+            "Content-Type": "application/json",
+            "data": encodeURI(JSON.stringify({ nr_albumu_user: nr_albumu_user, kod_aktywacji: kod_aktywacji }))
+        });
+
+        this.http.get(this.serverUrl + '/activate', { headers: options }).subscribe(res => {
+            if(res === 'nieistnieje')
+            {
+                resolve('blad')
+            }
+            else if(res === 'niepoprawny')
+            {
+                resolve('niepoprawny')
+            }
+            else if(res === 'niemakodu')
+            {
+                resolve('blad')
+            }
+            else if(res === 'wygaslo')
+            {
+                resolve('wygaslo')
+            }
+            else if(res === 'aktywowany')
+            {
+                resolve('aktywowany')
+            }
+            else
+            {
+                resolve('blad')
+            }
+        });
+    });
+}
+
+//ZAPOMNIAŁEM HASŁA
+async zapomnialem(nr_albumu_user: string) {
+    return new Promise<string>(resolve => {
+        let options = new HttpHeaders({
+            "Content-Type": "application/json",
+            "data": encodeURI(JSON.stringify({ nr_albumu_user: nr_albumu_user}))
+        });
+
+        this.http.get(this.serverUrl + '/remind', { headers: options }).subscribe(res => {
+            if(res === 'brak')
+            {
+                resolve('brak')
+            }
+            else if(res === 'nieaktywne')
+            {
+                resolve('nieaktywne')
+            }
+            else
+            {
+                resolve('blad')
+            }
+        });
+    });
+}
+
+//DODAWANIE KLUCZA
+async zbierzKlucz(RFID: string)
+  {
+    return new Promise<number>(resolve => {
+        let options = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        this.http.post(this.serverUrl + '/get_key', {numer_albumu: this.nr_albumu, RFID: RFID}, {headers: options}).subscribe(res => {
+            console.log(res)
+            if (res.hasOwnProperty('insertId')) {
+                resolve(1);
+            }
+            else if(res === 'brak')
+            {
+                resolve(3)
+            }
+            else if(res === 'istnieje')
+            {
+                resolve(2)
+            }
+            else {
+                resolve(0);
+            }
+        });
+    })
+  }
+
+  //POBIERANIE LISTY KLUCZY
+  async pobierzKlucze()
+  {
+    return new Promise<Array<Klucz>>(resolve => {
+        let options = new HttpHeaders({
+            "Content-Type": "application/json",
+            "data": encodeURI(JSON.stringify({nr_albumu_user: this.nr_albumu}))
+        });
+
+        this.http.get(this.serverUrl + '/fetch_keys', {headers: options}).subscribe(res => {
+            resolve(JSON.parse(decodeURI(JSON.stringify(res))))
+        });
+    })
+  }
+
+  //DLUGOSC LISTY KLUCZY
+  async dlugoscListyKluczy()
+  {
+    return new Promise<number>(resolve => {
+        let options = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        this.http.get(this.serverUrl + '/lenght', {headers: options}).subscribe(res => {
+            if(res.hasOwnProperty('dlugosc'))
+            {
+                resolve(JSON.parse(JSON.stringify(res)).dlugosc)
+            }
+            else
+            {
+                resolve(0)
+            }
+        });
+    })
+  }
+
+  //RANKING
+  async ranking()
+  {
+    return new Promise<number>(resolve => {
+        let options = new HttpHeaders({
+            "Content-Type": "application/json",
+            "data": encodeURI(JSON.stringify({nr_albumu: this.nr_albumu}))
+        });
+
+        this.http.get(this.serverUrl + '/rank', {headers: options}).subscribe(res => {
+            console.log(res)
+            if(res.hasOwnProperty('rnk'))
+            {
+                resolve(JSON.parse(JSON.stringify(res)).rnk)
+            }
+            else
+            {
+                resolve(0)
+            }
+        });
+    })
+  }
+}
+
+
+
+
