@@ -2,7 +2,7 @@
 .tabs
 {
     font-size: 20;
-    color: #1C2755;
+    color: white;
 }
 
 .strip-item
@@ -14,5 +14,5 @@
 .strip-item:active
 {
     background-color: #1C2755;
-    color: white;
+    /* color: rgb(255, 255, 255); */
 }

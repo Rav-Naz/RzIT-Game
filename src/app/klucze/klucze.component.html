@@ -1,14 +1,17 @@
 <FlexboxLayout class="wh100 back-color">
     <GridLayout rows="auto,*,*,*" columns="*,200">
         <StackLayout width="100%" row="0" colSpan="2" margin="5">
-            <Label [text]="'Zebrano: ' + listaKluczy.length + ' z ' + dlugoscCalejListy " horizontalAlignment="center" fontSize="15" class="acme"></Label>
+            <Label [text]="'Zebrano: ' + listaKluczy.length + ' z ' + dlugoscCalejListy " color="#1C2755" horizontalAlignment="center" fontSize="15" class="acme"></Label>
             <FlexboxLayout class="postep-cont" width="80%">
                 <Label class="postep" width="0%" #postep></Label>
             </FlexboxLayout>
         </StackLayout>
         <ScrollView row="1" rowSpan="3" colSpan="2" class="wh100" marginTop="5">
                 <StackLayout>
-                    <Button class="element" androidElevation="3" *ngFor="let element of listaKluczy" (tap)="szczegoly(element)">
+                    <Label text="Brak znalezionych kluczy, kliknij" *ngIf="listaKluczy.length===0" textFont="18" textWrap="true" class="comfortaa" width="80%" textAlignment="center" color="#1C2755"></Label>
+                    <Label text="&#xe095;" *ngIf="listaKluczy.length===0" textWrap="true" class="icon" textFont="30" width="80%" textAlignment="center" color="#1C2755"></Label>
+                    <Label text="i zeskanuj tag" *ngIf="listaKluczy.length===0" textWrap="true" textFont="18" class="comfortaa" width="80%" textAlignment="center" color="#1C2755"></Label>
+                    <Button class="element" androidElevation="3" *ngFor="let element of listaKluczy" (tap)="szczegoly(element)" color="#1C2755">
                         <FormattedString>
                             <Span [text]="'  ' + element.id + '. ' + element.tytul" class="span comfortaa"></Span>
                         </FormattedString>

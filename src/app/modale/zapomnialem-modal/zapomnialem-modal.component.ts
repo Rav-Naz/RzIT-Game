@@ -43,6 +43,9 @@ export class ZapomnialemModalComponent implements OnInit {
       this.aktywne = true;
       this.http.zapomnialem(this.form.get('numer').value).then(res => {
           switch (res) {
+             case 'wyslano':
+                 this.zamknij('wyslano')
+
               case 'brak':
                   this.istnieje = false;
                   break;

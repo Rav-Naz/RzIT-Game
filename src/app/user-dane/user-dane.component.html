@@ -5,11 +5,12 @@
             <Label [text]="nr_albumu" horizontalAlignment="center" class="acme dane"></Label>
             <Label text="Zebrane klucze" horizontalAlignment="center" class="comfortaa naglowek"></Label>
             <Label [text]="dlugosc_listy" horizontalAlignment="center" class="acme dane"></Label>
-            <Label text="Ranking" horizontalAlignment="center" class="comfortaa naglowek"></Label>
-            <Label [text]="miejsce" horizontalAlignment="center" class="acme dane"></Label>
+            <Label text="Ranking" horizontalAlignment="center" class="comfortaa naglowek" *ngIf="miejsce > 0"></Label>
+            <Label [text]="miejsce === 0? '--' : miejsce" *ngIf="miejsce > 0" horizontalAlignment="center" class="acme dane"></Label>
             <CardView class="card-view zarej" elevation="15" radius="80">
                 <Button text="Wyloguj" class="acme zarej-btn" (tap)="wyloguj()" androidElevation="0"></Button>
             </CardView>
+            <Button text="Zmień hasło" class="zmien comfortaa" androidElevation="0" (tap)="zmienHaslo()"></Button>
             <FlexboxLayout class="center make">
                 <Label text="Made with " class="comfortaa"></Label>
                 <Label text="&#xe05d;" class="icon" fontSize="15" color="rgb(220,25,25)"></Label>

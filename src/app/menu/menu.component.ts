@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page } from '@nativescript/core';
 import { Scan } from '../modele/scan.model';
 import { NfcService } from '../nfc.service';
 import { RouterExtensions } from 'nativescript-angular/router';
@@ -22,17 +22,4 @@ export class MenuComponent implements OnInit {
         this.page.actionBarHidden = true;
         this.router.navigate([{ outlets: { klucze: ['klucze'], user: ['user-dane']} }],{relativeTo: this.active});
     }
-
-    skanuj() {
-        this.nfcService.nasluchuj().then(res => {
-            this.message = res
-        })
-    }
-
-
-    wylacz() {
-        this.message = ""
-        this.nfcService.wylaczNasluch()
-    }
-
 }

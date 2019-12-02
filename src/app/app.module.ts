@@ -17,6 +17,7 @@ import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 import { AktywacjaModalComponent } from './modale/aktywacja-modal/aktywacja-modal.component';
 import { ZapomnialemModalComponent } from './modale/zapomnialem-modal/zapomnialem-modal.component';
 import { GodzinaPipe } from './godzina.pipe';
+import { ZmienHasloModalComponent } from './modale/zmien-haslo-modal/zmien-haslo-modal.component';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -47,13 +48,14 @@ import { GodzinaPipe } from './godzina.pipe';
         SkanowanieComponent,
         AktywacjaModalComponent,
         ZapomnialemModalComponent,
-        GodzinaPipe
+        GodzinaPipe,
+        ZmienHasloModalComponent
     ],
     providers: [],
     schemas: [
         NO_ERRORS_SCHEMA
     ],
-    entryComponents: [RejestracjaModalComponent, SkanowanieComponent, AktywacjaModalComponent, ZapomnialemModalComponent]
+    entryComponents: [RejestracjaModalComponent, SkanowanieComponent, AktywacjaModalComponent, ZapomnialemModalComponent, ZmienHasloModalComponent]
 })
 /*
 Pass your application module to the bootstrapModule function located in main.ts to start your app

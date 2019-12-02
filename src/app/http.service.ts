@@ -136,13 +136,17 @@ async zapomnialem(nr_albumu_user: string) {
         });
 
         this.http.get(this.serverUrl + '/remind', { headers: options }).subscribe(res => {
-            if(res === 'brak')
+            if(res === 'wyslano')
             {
-                resolve('brak')
+                resolve('wyslano')
             }
             else if(res === 'nieaktywne')
             {
                 resolve('nieaktywne')
+            }
+            else if(res === 'brak')
+            {
+                resolve('brak')
             }
             else
             {
@@ -161,7 +165,6 @@ async zbierzKlucz(RFID: string)
         });
 
         this.http.post(this.serverUrl + '/get_key', {numer_albumu: this.nr_albumu, RFID: RFID}, {headers: options}).subscribe(res => {
-            console.log(res)
             if (res.hasOwnProperty('insertId')) {
                 resolve(1);
             }
@@ -204,6 +207,11 @@ async zbierzKlucz(RFID: string)
         });
 
         this.http.get(this.serverUrl + '/lenght', {headers: options}).subscribe(res => {
+            if(res === null)
+            {
+                resolve(0)
+                return
+            }
             if(res.hasOwnProperty('dlugosc'))
             {
                 resolve(JSON.parse(JSON.stringify(res)).dlugosc)
@@ -226,7 +234,11 @@ async zbierzKlucz(RFID: string)
         });
 
         this.http.get(this.serverUrl + '/rank', {headers: options}).subscribe(res => {
-            console.log(res)
+            if(res === null)
+            {
+                resolve(0)
+                return
+            }
             if(res.hasOwnProperty('rnk'))
             {
                 resolve(JSON.parse(JSON.stringify(res)).rnk)
@@ -238,6 +250,29 @@ async zbierzKlucz(RFID: string)
         });
     })
   }
+
+  //ZMIANA HASLA
+  async zmienHaslo(aktualne_haslo: string, nowe_haslo: string) {
+    return new Promise<number>(resolve => {
+        let options = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+
+        this.http.post(this.serverUrl + '/change_password' , { aktualne_haslo: sha512.sha512.hmac('IT', aktualne_haslo), nowe_haslo: sha512.sha512.hmac('IT', nowe_haslo), nr_albumu: this.nr_albumu}, { headers: options }).subscribe(res => {
+            if (res === 'zakonczono') {
+                resolve(1);
+            }
+            else if(res === 'niepoprawne')
+            {
+                resolve(2);
+            }
+            else {
+                resolve(0);
+            }
+        });
+    });
+}
+
 }
 
 

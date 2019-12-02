@@ -19,6 +19,19 @@ export class DaneService {
 
     private kluczeSub = new BehaviorSubject<Array<Klucz>>(null);
 
+    nadajKlucz(klucz: Klucz)
+     {
+         this.wybranyKlucz = klucz;
+     }
+
+    wyczysc()
+    {
+        this.nadajKlucz({id: 0, rfid: '111111', tytul: '', zagadka: '',link: 'google.com', data_zebrania: null})
+        this.klucze = [];
+        this.kluczeSub.next(null)
+        this.http.nadajAlbum(1)
+    }
+
 
     get Klucze()
     {
@@ -80,10 +93,15 @@ export class DaneService {
         })
     }
 
-   nadajKlucz(klucz: Klucz)
+    async zmienHaslo(aktualne_haslo: string, nowe_haslo: string)
     {
-        this.wybranyKlucz = klucz;
+        return new Promise<number>(resolve => {
+            this.http.zmienHaslo(aktualne_haslo,nowe_haslo).then(res => {
+                resolve(res)
+            })
+        })
     }
+
 
     get WybranyKlucz()
     {

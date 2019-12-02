@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DaneService } from '../dane.service';
 import { Klucz } from '../modele/klucz.model';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page } from '@nativescript/core';
 import { RouterExtensions } from 'nativescript-angular/router';
-import * as utils from "tns-core-modules/utils/utils";
+import * as utils from "@nativescript/core/utils/utils";
 
 @Component({
   selector: 'ns-szczegoly-klucza',

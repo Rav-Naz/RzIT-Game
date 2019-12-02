@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page } from '@nativescript/core';
 import { ModalDialogService } from 'nativescript-angular/modal-dialog';
 import { ExtendedShowModalOptions } from 'nativescript-windowed-modal';
 import { RejestracjaModalComponent } from '../modale/rejestracja-modal/rejestracja-modal.component';
@@ -56,7 +56,9 @@ export class LoginComponent implements OnInit {
         switch (res) {
             case 'poprawne':
                     this.http.nadajAlbum(this.formP.get('numer').value)
-                    this.router.navigate(['/menu'], {transition: {name: 'slideTop', duration: 500}, clearHistory: true})
+                    setTimeout(() => {
+                        this.router.navigate(['/menu'], {transition: {name: 'slideTop', duration: 500}})
+                    }, 200)
                     break;
             case 'niepoprawne':
                 this.ui.pokazPowiadomienie("Uwaga!", "Niepoprawny numer albumu i/lub hasło", 1,2)
@@ -94,11 +96,6 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  szyfr()
-  {
-      console.log(encodeURI('https://www.google.pl/maps/dir//Rzeszów,+35-001,+Polska/@50.0191842,21.9835212,18.5z/data=!4m8!4m7!1m0!1m5!1m1!1s0x473cfbb3f429cf1d:0xe25a6613e21fab44!2m2!1d21.9844414!2d50.0192997'))
-  }
-
   rejestracja()
   {
     this.modal.showModal(RejestracjaModalComponent, {
@@ -124,7 +121,17 @@ export class LoginComponent implements OnInit {
         closeCallback: null,
         dimAmount: 0.7 // Sets the alpha of the background dim,
 
-    } as ExtendedShowModalOptions).then()
+    } as ExtendedShowModalOptions).then(res => {
+        if(res === 'wyslano')
+        {
+            this.ui.pokazPowiadomienie('Sukces!', 'Na Twoją pocztę studencką wysłano potwierdzenie', 0, 2)
+        }
+        else if(res === 'blad')
+        {
+            this.ui.pokazPowiadomienie("Błąd!", "Wystąpił nieoczekiwany błąd", 1,2)
+        }
+
+    })
   }
 
 
